@@ -25,7 +25,7 @@ public protocol HTagViewDelegate: class {
  */
 public protocol HTagViewDataSource: class {
     func numberOfTags(_ tagView: HTagView) -> Int
-    func tagView(_ tagView: HTagView, titleOfTagAtIndex index: Int) -> String
+    func tagView(_ tagView: HTagView, titleOfTagAtIndex index: Int) -> NSAttributedString
     func tagView(_ tagView: HTagView, tagTypeAtIndex index: Int) -> HTagType
     func tagView(_ tagView: HTagView, tagWidthAtIndex index: Int) -> CGFloat
 }
@@ -302,7 +302,12 @@ open class HTagView: UIView {
             tag.tagCancelIconRightMargin = tagCancelIconRightMargin
             tag.tagMaximumWidth = tagMaximumWidth
             tag.tagElevation = tagElevation
-            tag.tagTitle = dataSource.tagView(self, titleOfTagAtIndex: index)
+            let attrString = dataSource.tagView(self, titleOfTagAtIndex: index)
+            tag.tagTitle = attrString.mutableCopy() as! NSMutableAttributedString
+            if attrString.attributes(at: 0, effectiveRange: nil).count != 0 {
+                tag.tagBorderWidth = 0
+            }
+            
             addSubview(tag)
             tags.append(tag)
         }

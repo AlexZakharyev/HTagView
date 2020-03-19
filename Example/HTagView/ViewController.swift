@@ -69,14 +69,14 @@ class ViewController: UIViewController, HTagViewDelegate, HTagViewDataSource {
         }
     }
     
-    func tagView(_ tagView: HTagView, titleOfTagAtIndex index: Int) -> String {
+    func tagView(_ tagView: HTagView, titleOfTagAtIndex index: Int) -> NSAttributedString {
         switch tagView {
         case tagView1:
-            return tagView1_data[index]
+            return NSAttributedString(string: tagView1_data[index])
         case tagView2:
-            return tagView2_data[index]
+            return NSAttributedString(string: tagView2_data[index])
         default:
-            return "???"
+            return NSAttributedString(string: "???")
         }
     }
     

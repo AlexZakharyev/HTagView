@@ -18,13 +18,13 @@ public class HTag: UIView {
     
     // MARK: - HTag Configuration
     /**
-     Type of tag
+     Types of tag
      */
     var tagType: HTagType = .cancel { didSet { updateAll() } }
     /**
      Title of tag
      */
-    var tagTitle: String = "" { didSet { updateAll() } }
+    var tagTitle: NSMutableAttributedString = NSMutableAttributedString(string: "") { didSet { updateAll() } }
     /**
      Main background color of tags
      */
@@ -216,7 +216,8 @@ public class HTag: UIView {
         var attributes: [NSAttributedString.Key: Any] = [:]
         attributes[.font] = tagFont
         attributes[.foregroundColor] = textColor
-        button.setAttributedTitle(NSAttributedString(string: tagTitle, attributes: attributes), for: .normal)
+        tagTitle.addAttributes(attributes, range: NSMakeRange(0, tagTitle.length))
+        button.setAttributedTitle(tagTitle, for: .normal)
         if tagType == .cancel {
             cancelButton.tintColor = textColor
         }
